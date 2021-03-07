@@ -14,7 +14,7 @@ class CreateDronesTable extends Migration
     public function up()
     {
         Schema::create('drones', function (Blueprint $table) {
-            $table->id();
+            $table->integer('id');
             $table->string('image');
             $table->string('name');
             $table->string('address');

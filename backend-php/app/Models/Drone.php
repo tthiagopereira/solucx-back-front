@@ -9,5 +9,5 @@ class Drone extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['image','name', 'address','battery','max_speed','average_speed','status','fly'];
+    protected $fillable = ['id','image','name', 'address','battery','max_speed','average_speed','status','fly'];
 }

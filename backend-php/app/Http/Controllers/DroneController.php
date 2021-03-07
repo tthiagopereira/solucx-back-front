@@ -13,13 +13,32 @@ class DroneController extends Controller
         return response()->json(Drone::all());
     }
 
-    public function store(Request $request)
+    public function store(Request $request, $id)
     {
         $this->validate($request,[
 
         ]);
 
-        return response()->json(Drone::create($request->all()));
+        $register = new Drone();
+        $register->id = $id;
+
+        $droneExistente = Drone::find($id);
+
+        if($droneExistente) {
+            return response()->json(['message' => 'Drone já existe em nossa base de dados']);
+        }
+
+        $register->image = $request->image;
+        $register->name = $request->name;
+        $register->address = $request->address;
+        $register->battery = $request->battery;
+        $register->max_speed = $request->max_speed;
+        $register->average_speed = $request->average_speed;
+        $register->status = $request->status;
+        $register->fly = $request->fly;
+        $register->save();
+
+        return response()->json($register);
 
     }
 
@@ -37,8 +56,17 @@ class DroneController extends Controller
     {
         $register = Drone::find($id);
         if($register) {
-            $register->fill($request->all());
+
+            $register->image = $request->image;
+            $register->name = $request->name;
+            $register->address = $request->address;
+            $register->battery = $request->battery;
+            $register->max_speed = $request->max_speed;
+            $register->average_speed = $request->average_speed;
+            $register->status = $request->status;
+            $register->fly = $request->fly;
             $register->update();
+
             return response()->json($register);
         }
         return response()->json(['message' => 'Registro não encontrado']);
