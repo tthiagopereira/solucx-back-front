@@ -3,13 +3,17 @@
 
     <div class="row mt-5">
       <div class="col-md-4">
-        <router-link :to="`/create/drone`" class="btn btn-success">Cadastrar Drone</router-link>
+        <router-link :to="`/create/drone`"
+                     class="btn btn-success">Cadastrar Drone</router-link>
       </div>
       <div class="col-md-4"></div>
       <div class="col-md-4"></div>
     </div>
 
     <div class="row mt-5" ></div>
+
+    <input type="text" v-model="drone_id">
+    {{ drone_id}}
 
     <table class="table">
       <thead>
@@ -51,7 +55,8 @@
             </div>
           </div>
         </td>
-        <td><b-progress :value="drone.battery" :max="max" show-progress animated></b-progress>
+        <td><b-progress :value="drone.battery"
+                        :max="max" show-progress animated></b-progress>
           {{ drone.battery}}
         </td>
         <td id="estiloValorMax">
@@ -68,7 +73,11 @@
         </td>
 
         <td>
-          <b-form-input id="range-1" v-model="drone.fly" type="range" min="0" max="100" disabled></b-form-input>
+          <b-form-input id="range-1"
+                        v-model="drone.fly"
+                        type="range"
+                        min="0"
+                        max="100" disabled></b-form-input>
         </td>
         <td v-if="drone.status == 'failed'">
           <button class="btn btn-danger">
@@ -81,14 +90,12 @@
           </button>
         </td>
         <td class="text-center">
-          <button class="btn btn-info"> Alterar</button>
-          <button class="btn btn-danger" v-b-modal.modal-1 @click="destroy(drone.id)"> Deletar</button>
-          <b-modal id="modal-1" title="BootstrapVue">
-            <p class="my-4">Tem certeza que deseja excluir o drone </p>
-          </b-modal>
+          <router-link class="btn btn-warning"
+                       :to="`/update/drone/${drone.id}`">Alterar</router-link>
+          <button class="btn btn-danger" v-b-modal.modal-1
+                  @click="destroy(drone.id)"> Deletar</button>
         </td>
       </tr>
-
       </tbody>
     </table>
   </div>
@@ -100,12 +107,14 @@ export default {
   data() {
     return {
       drones: [],
+      id: null,
       max: 100,
-      mainProps: { blankColor: '#777', width: 75, height: 75, class: 'm1' },
+      drone_id: null,
+      mainProps: { blankColor: '#777', width: 75, height: 75, class: 'm1' }
     };
   },
   created() {
-    this.index()
+    this.index();
   },
   methods: {
     formatarValor(valor) {
@@ -116,12 +125,13 @@ export default {
     },
     index() {
       this.$http.get('/api/drones')
-          .then(resp => { this.drones = resp.data; });
+          .then(resp => { this.drones = resp.data;});
     },
     destroy(id) {
       this.$http.delete('/api/drones/'+id)
-      .then(() => this.index())
-    }
+      .then(() => this.index());
+    },
+
   }
 };
 </script>
