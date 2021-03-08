@@ -3,7 +3,7 @@
 
     <div class="row mt-5">
       <div class="col-md-4">
-        <button class="btn btn-success">Cadastrar</button>
+        <router-link :to="`/create/drone`" class="btn btn-success">Cadastrar Drone</router-link>
       </div>
       <div class="col-md-4"></div>
       <div class="col-md-4"></div>
@@ -82,12 +82,13 @@
         </td>
         <td class="text-center">
           <button class="btn btn-info"> Alterar</button>
-          <button class="btn btn-danger" v-b-modal.modal-1> Deletar</button>
+          <button class="btn btn-danger" v-b-modal.modal-1 @click="destroy(drone.id)"> Deletar</button>
+          <b-modal id="modal-1" title="BootstrapVue">
+            <p class="my-4">Tem certeza que deseja excluir o drone </p>
+          </b-modal>
         </td>
       </tr>
-      <b-modal id="modal-1" title="BootstrapVue">
-        <p class="my-4">Tem certeza que deseja excluir o drone </p>
-      </b-modal>
+
       </tbody>
     </table>
   </div>
@@ -104,10 +105,7 @@ export default {
     };
   },
   created() {
-    this.$http.get('/api/drones')
-        .then(resp => {
-          this.drones = resp.data;
-        });
+    this.index()
   },
   methods: {
     formatarValor(valor) {
@@ -115,6 +113,14 @@ export default {
       let formatarPonto = formatarValor.replace(',', '.');
       let formatoArray = formatarPonto.split('.');
       return formatoArray;
+    },
+    index() {
+      this.$http.get('/api/drones')
+          .then(resp => { this.drones = resp.data; });
+    },
+    destroy(id) {
+      this.$http.delete('/api/drones/'+id)
+      .then(() => this.index())
     }
   }
 };

@@ -15,10 +15,6 @@ class DroneController extends Controller
 
     public function store(Request $request, $id)
     {
-        $this->validate($request,[
-
-        ]);
-
         $register = new Drone();
         $register->id = $id;
 
