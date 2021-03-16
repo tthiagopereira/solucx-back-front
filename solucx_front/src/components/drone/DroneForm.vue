@@ -85,12 +85,11 @@ export default {
                   this.$router.push('/')}
             )
       }
-
     },
 
     show() {
       if(this.id) {
-        this.$http.get(`/api/drones/${this.id}`)
+        this.$http.get(`/api/drones/edit/${this.id}`)
             .then(resp => {
               this.drone = resp.data
             })

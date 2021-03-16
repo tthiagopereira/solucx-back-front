@@ -8,9 +8,9 @@
 </template>
 
 <script>
-// import HelloWorld from './components/HelloWorld.vue'
+
 import NavBar from '@/components/layout/NavBar';
-// import Drones from '@/components/drone/Drones';
+
 export default {
   name: 'App',
   components: {

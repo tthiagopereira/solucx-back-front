@@ -10,3 +10,4 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::resource('drones', DroneController::class);
 Route::post('drones/{id}', [DroneController::class, 'store']);
+Route::get('drones/edit/{id}', [DroneController::class, 'edit']);

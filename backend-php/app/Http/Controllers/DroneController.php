@@ -40,7 +40,19 @@ class DroneController extends Controller
 
     public function show($id)
     {
+        $register = Drone::where('id', $id)->get();
+//        $register = Drone::find($id);
+        if($register) {
+            return response()->json($register);
+        }
+        return response()->json(['message' => 'Registro não encontrado']);
+
+    }
+
+    public function edit($id)
+    {
         $register = Drone::find($id);
+//        $register = Drone::find($id);
         if($register) {
             return response()->json($register);
         }
